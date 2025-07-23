@@ -25,6 +25,11 @@ export class TasksController {
         
     // }
 
+    @Get()
+    getTasks(@Query() filterTaskDto: FilterTaskDto): Promise<Task[]>{
+        return this.tasksService.getTasks(filterTaskDto);
+    }
+
     @Get('/:id')
     getTaskById(@Param('id') id: string): Promise<Task> {
         // console.log('Controller received id:', id);
@@ -51,10 +56,10 @@ export class TasksController {
         return this.tasksService.createTask(createTaskDto);
     }
 
-    // @Patch('/:id/status')
-    // updateTaskStatus(@Param('id') id: string, @Body() updateTaskStatusDto: UpdateTaskStatusDto): Task {
-    //     return this.tasksService.updateTaskStatus(id, updateTaskStatusDto.status);
-    // }
+    @Patch('/:id/status')
+    updateTaskStatus(@Param('id') id: string, @Body() updateTaskStatusDto: UpdateTaskStatusDto): Promise<Task> {
+        return this.tasksService.updateTaskStatus(id, updateTaskStatusDto.status);
+    }
 
 
 

@@ -37,10 +37,14 @@ export class TasksService {
     //     }
     //     return tasks;
     // }
+        getTasks(filterTaskDto: FilterTaskDto): Promise<Task[]> {
+            return this.tasksRepository.getTask(filterTaskDto)
+
+        }
+
 
     async getTaskById(id: string): Promise<Task> {
         // console.log('Service received id:', id);
-
         return this.tasksRepository.getTaskById(id);
     }
     // getTaskById(id: string): Task {
@@ -64,11 +68,9 @@ export class TasksService {
     //     return task;
     // }
 
-    // updateTaskStatus(id: string, status: TaskStatus): Task {
-    //     const task = this.getTaskById(id);
-    //     task.status = status;
-    //     return task;
-    // }
+    updateTaskStatus(id: string, status: TaskStatus): Promise<Task> {
+        return this.tasksRepository.updateTaskById(id, status);
+    }
 
      async createTask(createTaskDto: CreateTaskDto): Promise<Task>{
         return this.tasksRepository.createTask(createTaskDto)
