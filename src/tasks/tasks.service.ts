@@ -14,8 +14,8 @@ export class TasksService {
 
     
     constructor(
-        @InjectRepository(Task)
-        private readonly tasksRepository: Repository<Task>,) 
+        // @InjectRepository(Task)
+        private readonly tasksRepository: TaskRepository) 
         {}
 
     // private tasks: Task[] = [];
@@ -39,11 +39,9 @@ export class TasksService {
     // }
 
     async getTaskById(id: string): Promise<Task> {
-        const found = await this.tasksRepository.findOne({ where: { id } });
-        if (!found) {
-            throw new NotFoundException(`Task with ID "${id}" not found`);
-        }
-        return found;
+        // console.log('Service received id:', id);
+
+        return this.tasksRepository.getTaskById(id);
     }
     // getTaskById(id: string): Task {
     //     const task = this.tasks.find(task => task.id === id);
@@ -53,11 +51,9 @@ export class TasksService {
     //     return task;
     // }
 
-    // deleteTask(id: string): Task[] {
-    //     const found = this.getTaskById(id);
-    //     this.tasks = this.tasks.filter(task => task.id !== found.id);
-    //     return this.tasks;
-    // }
+    async deleteTask(id: string): Promise<void> {
+        return this.tasksRepository.deleteTask(id)
+    }
 
     
     
@@ -74,17 +70,18 @@ export class TasksService {
     //     return task;
     // }
 
-    async createTask(createTaskDto: CreateTaskDto): Promise<Task>{
-            const { title, description } = createTaskDto;
+     async createTask(createTaskDto: CreateTaskDto): Promise<Task>{
+        return this.tasksRepository.createTask(createTaskDto)
+            // const { title, description } = createTaskDto;
 
-            const task: Task = this.tasksRepository.create({
-                title,
-                description,
-                status: TaskStatus.OPEN
-            })
+            // const task: Task = this.tasksRepository.create({
+            //     title,
+            //     description,
+            //     status: TaskStatus.OPEN
+            // })
 
-            await this.tasksRepository.save(task);
-            return task;
+            // await this.tasksRepository.save(task);
+            // return task;
     }
 
     // createTask(createTaskDto: CreateTaskDto): Task {
