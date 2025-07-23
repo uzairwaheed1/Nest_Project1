@@ -1,14 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { EntityRepository, Repository } from 'typeorm';
 import { Task } from './task.entity';
+// import {}
+
+// @Injectable()
+// export class TaskRepository  {
+//   constructor(
+//     @InjectRepository(Task)
+//     private readonly taskRepository: Repository<Task>,
+//   ) {}
+// }
 
 @Injectable()
-export class TasksRepository {
-  constructor(
-    @InjectRepository(Task)
-    private readonly taskRepository: Repository<Task>,
-  ) {}
-
-  // Add custom methods here, using this.taskRepository
+export class TaskRepository extends Repository<Task> {
+  constructor(@InjectRepository(Task) private readonly repo: Repository<Task>) {
+    super(repo.target, repo.manager, repo.queryRunner);
+  }
 }

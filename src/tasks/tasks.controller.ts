@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Post, Param, Delete, Patch, Put, Query } from '@nestjs/common';
 import { TasksService,  } from './tasks.service';
-import { Task } from './task.model';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { FilterTaskDto } from './dto/filter-task.dto';
 import { UpdateTaskStatusDto } from './dto/update-taskStatus.dto';
+import { Task } from './task.entity';
 
 
 @Controller('tasks')
@@ -13,42 +13,47 @@ export class TasksController {
 
 
 
-    @Get()
-    getTasks(@Query() filterTaskDto: FilterTaskDto): Task[] {
-        if(Object.keys(filterTaskDto).length){
-            return this.tasksService.getTasks(filterTaskDto);
+    // @Get()
+    // getTasks(@Query() filterTaskDto: FilterTaskDto): Task[] {
+    //     if(Object.keys(filterTaskDto).length){
+    //         return this.tasksService.getTasks(filterTaskDto);
 
-        }
-        else{
-            return this.tasksService.getAllTasks();
-        }
+    //     }
+    //     else{
+    //         return this.tasksService.getAllTasks();
+    //     }
         
-    }
+    // }
 
     @Get('/:id')
-    getTaskById(@Param('id') id: string): Task {
+    getTaskById(@Param('id') id: string): Promise<Task> {
         return this.tasksService.getTaskById(id);
     }
 
-    @Put('/:id')
-    updateTaskById(@Param('id') id: string, @Body() updateTaskDto: CreateTaskDto): Task {
-        return this.tasksService.updateTaskById(id, updateTaskDto);
-    }   
+    // @Put('/:id')
+    // updateTaskById(@Param('id') id: string, @Body() updateTaskDto: CreateTaskDto): Task {
+    //     return this.tasksService.updateTaskById(id, updateTaskDto);
+    // }   
 
-    @Delete('/:id')
-    deleteTask(@Param('id') id: string): Task[] {
-        return this.tasksService.deleteTask(id);
-    }
+    // @Delete('/:id')
+    // deleteTask(@Param('id') id: string): Task[] {
+    //     return this.tasksService.deleteTask(id);
+    // }
+
+    // @Post()
+    // createTask(@Body() createTaskDto: CreateTaskDto): Task {
+    //     return this.tasksService.createTask(createTaskDto);
+    // }
 
     @Post()
-    createTask(@Body() createTaskDto: CreateTaskDto): Task {
+    createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task>{
         return this.tasksService.createTask(createTaskDto);
     }
 
-    @Patch('/:id/status')
-    updateTaskStatus(@Param('id') id: string, @Body() updateTaskStatusDto: UpdateTaskStatusDto): Task {
-        return this.tasksService.updateTaskStatus(id, updateTaskStatusDto.status);
-    }
+    // @Patch('/:id/status')
+    // updateTaskStatus(@Param('id') id: string, @Body() updateTaskStatusDto: UpdateTaskStatusDto): Task {
+    //     return this.tasksService.updateTaskStatus(id, updateTaskStatusDto.status);
+    // }
 
 
 
