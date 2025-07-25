@@ -7,7 +7,7 @@ import * as bcrypt from 'bcrypt';
 
 
 
-Injectable()
+@Injectable()
 export class UserRepositary {
     constructor(
         @InjectRepository(User)
@@ -38,5 +38,14 @@ export class UserRepositary {
         }
 
 
+    }
+
+    async findOneByUsername(username: string): Promise<User> {
+        const user = await this.repo.findOne({ where: { username } });
+        if (!user) {
+            throw new ConflictException('User not found');
+        }
+        
+        return user;
     }
 }
